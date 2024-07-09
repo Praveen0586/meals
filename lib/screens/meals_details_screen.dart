@@ -1,20 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:meals/models/mealsdummy.dart';
+import 'package:meals/provider/faviroutes_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MealdetailsScreen extends StatelessWidget {
-  const MealdetailsScreen(
-      {super.key, required this.meal, required this.onChoosedAsFaviorite});
-  final void Function(Meal meal) onChoosedAsFaviorite;
+class MealdetailsScreen extends ConsumerWidget {
+  const MealdetailsScreen({
+    super.key,
+    required this.meal,
+  });
+
   final Meal meal;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         appBar: AppBar(
           title: Text(meal.title),
           actions: [
             IconButton(
                 onPressed: () {
-                  onChoosedAsFaviorite(meal);
+                  // we triger the fuction with provider
+                  final isAdded = ref
+                      .read(faviroutesprovider.notifier)
+                      .toggleforfaviroute(meal);
+
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(isAdded
+                          ? 'Marked as a favorite.'
+                          : "This meal is no longer my favorite")));
                 },
                 icon: const Icon(Icons.star_outlined))
           ],

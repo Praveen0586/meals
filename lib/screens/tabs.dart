@@ -7,6 +7,8 @@ import 'package:meals/screens/meals.dart';
 import 'package:meals/widgets/main_drawer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals/provider/faviroutes_provider.dart';
 
 const kintialvalues = {
   Filter.glutenFree: false,
@@ -27,13 +29,13 @@ class _TabScreenState extends ConsumerState<TabScreen> {
   Map<Filter, bool> _onrecievedValues = kintialvalues;
 
   int _currentpageindex = 0;
-  List<Meal> myfaviroutes = [];
+  
 //must write this above declaration as outside the build column
 //because whenever the setstate exicutes the build is re- redered
 //sot the program wont be chnage - so we need to write this Declaration outisde
   @override
   Widget build(BuildContext context) {
-    final providedmeals =ref.watch(mealsProvider);
+    final providedmeals = ref.watch(mealsProvider);
     //now macking the filter logic
     final avilablemeals = providedmeals.where((meal) {
       if (_onrecievedValues[Filter.glutenFree]! && meal.isGlutenFree) {
@@ -68,29 +70,11 @@ class _TabScreenState extends ConsumerState<TabScreen> {
       } else {}
     }
 
-    void _onsnackbarMessage(String mesage) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(mesage)));
-    }
+    
+      
+    
 
-    void _onselectedfaviroutes(Meal meal) {
-//first checking the fuction that if it is already on the faviroute list
-      final isExcess = myfaviroutes.contains(meal);
-      if (isExcess) {
-        //condtion if True
-        setState(() {
-          myfaviroutes.remove(meal);
-          _onsnackbarMessage('This meal is no longer my favorite');
-        });
-      } else {
-        //for false
-        setState(() {
-          myfaviroutes.add(meal);
-          _onsnackbarMessage('Marked as a favorite.');
-        });
-      }
-    }
+   
 
     // //or
     //   setState(() {
@@ -109,8 +93,8 @@ class _TabScreenState extends ConsumerState<TabScreen> {
 
     String currentpagetitle = 'Categories';
     Widget currentscreen = Categories(
-      onfiltered: avilablemeals,
-      onchoosedasfav: _onselectedfaviroutes,
+      onfiltered: avilablemeals
+     
     );
 
     void changescreen(int index) {
@@ -120,8 +104,9 @@ class _TabScreenState extends ConsumerState<TabScreen> {
     }
 
     if (_currentpageindex == 1) {
+      final myfaviroutemealprovider = ref.watch(faviroutesprovider);
       currentscreen =
-          MealsScreen(onchoosedfav: _onselectedfaviroutes, meals: myfaviroutes);
+          MealsScreen( meals: myfaviroutemealprovider);
       currentpagetitle = 'Favourite';
     }
     return Scaffold(

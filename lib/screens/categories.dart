@@ -7,8 +7,8 @@ import 'package:meals/screens/meals.dart';
 import 'package:meals/widgets/category_item_grid.dart';
 
 class Categories extends StatelessWidget {
-  const Categories({super.key, required this.onchoosedasfav, required this.onfiltered});
-  final void Function(Meal) onchoosedasfav;
+  const Categories({super.key, required this.onfiltered});
+  
   final List<Meal> onfiltered;
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class Categories extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (ctx) => MealsScreen(
-                  onchoosedfav: onchoosedasfav,
+                 
                   title: selectedone.title,
                   meals: filteredlist)));
       // Navigator.of(context).push(MaterialPageRoute(

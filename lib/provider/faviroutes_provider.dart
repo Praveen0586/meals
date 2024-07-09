@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 
 class FaviroutesProvideNotifier extends StateNotifier<List<Meal>> {
   FaviroutesProvideNotifier() : super([]);
-  void toggleforfaviroute(Meal meal) {
+  bool toggleforfaviroute(Meal meal) {
     final isfavchecked = state.contains(meal);
 
     if (isfavchecked) {
       state = state.where((isthere) => isthere.id != meal.id).toList();
+      return false;
     } else {
       state = [...state, meal];
+      return true;
     }
   }
 }
