@@ -13,6 +13,7 @@ class FaviroutesProvideNotifier extends StateNotifier<List<Meal>> {
       state = [...state, meal];
     }
   }
+  
 }
 
 final faviroutesprovider =
