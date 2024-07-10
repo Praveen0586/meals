@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meals/models/mealsdummy.dart';
 import 'package:meals/provider/faviroutes_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals/provider/filters_provider.dart';
 
 class MealdetailsScreen extends ConsumerWidget {
   const MealdetailsScreen({
@@ -12,6 +13,11 @@ class MealdetailsScreen extends ConsumerWidget {
   final Meal meal;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    
+    final favirotemeals = ref.watch(filteredMealsProvider);
+    final isFaviroute = favirotemeals.contains(meal);
+   
+
     return Scaffold(
         appBar: AppBar(
           title: Text(meal.title),
@@ -19,6 +25,7 @@ class MealdetailsScreen extends ConsumerWidget {
             IconButton(
                 onPressed: () {
                   // we triger the fuction with provider
+
                   final isAdded = ref
                       .read(faviroutesprovider.notifier)
                       .toggleforfaviroute(meal);
@@ -28,8 +35,10 @@ class MealdetailsScreen extends ConsumerWidget {
                       content: Text(isAdded
                           ? 'Marked as a favorite.'
                           : "This meal is no longer my favorite")));
+                 
                 },
-                icon: const Icon(Icons.star_outlined))
+                icon:
+                    Icon(isFaviroute ? Icons.star : Icons.star_border))
           ],
         ),
         body: ListView(children: [
