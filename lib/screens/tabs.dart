@@ -39,21 +39,6 @@ class _TabScreenState extends ConsumerState<TabScreen> {
     //with the help of the provider
     final filteredList = ref.watch(filteredMealsProvider);
     final avilablemeals = filteredList;
-    // providedmeals.where((meal) {
-    //   if (activefilter[Filter.glutenFree]! && !meal.isGlutenFree) {
-    //     return false;
-    //   }
-    //   if (activefilter[Filter.lactoseFree]! && !meal.isLactoseFree) {
-    //     return false;
-    //   }
-    //   if (activefilter[Filter.vegetarian]! && !meal.isVegetarian) {
-    //     return false;
-    //   }
-    //   if (activefilter[Filter.vegan]! && !meal.isVegan) {
-    //     return false;
-    //   }
-    //   return true;
-    // }).toList();
     void _onselectedscreen(String identiier) async {
       Navigator.of(context).pop();
       if (identiier == 'Filters') {
