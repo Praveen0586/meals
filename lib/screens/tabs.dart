@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meals/datas/dummy_datas.dart';
-import 'package:meals/models/mealsdummy.dart';
+
 import 'package:meals/screens/categories.dart';
 import 'package:meals/screens/filters.dart';
 import 'package:meals/screens/meals.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/provider/provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/provider/faviroutes_provider.dart';
+import 'package:meals/provider/filters_provider.dart';
 
 const kintialvalues = {
   Filter.glutenFree: false,
@@ -26,31 +26,28 @@ class TabScreen extends ConsumerStatefulWidget {
 }
 
 class _TabScreenState extends ConsumerState<TabScreen> {
-  Map<Filter, bool> _onrecievedValues = kintialvalues;
-
   int _currentpageindex = 0;
-  
+
 //must write this above declaration as outside the build column
 //because whenever the setstate exicutes the build is re- redered
 //sot the program wont be chnage - so we need to write this Declaration outisde
   @override
   Widget build(BuildContext context) {
     final providedmeals = ref.watch(mealsProvider);
+    final activefilter = ref.watch(filtersProvider);
     //now macking the filter logic
     final avilablemeals = providedmeals.where((meal) {
-      if (_onrecievedValues[Filter.glutenFree]! && meal.isGlutenFree) {
-        print(_onrecievedValues[Filter.glutenFree]);
-        print(meal.isGlutenFree);
-        print(_onrecievedValues[Filter.glutenFree]! && !meal.isGlutenFree);
+      if (activefilter[Filter.glutenFree]! && !meal.isGlutenFree) {
+       
         return false;
       }
-      if (_onrecievedValues[Filter.lactoseFree]! && !meal.isLactoseFree) {
+      if (activefilter[Filter.lactoseFree]! && !meal.isLactoseFree) {
         return false;
       }
-      if (_onrecievedValues[Filter.vegetarian]! && !meal.isVegetarian) {
+      if (activefilter[Filter.vegetarian]! && !meal.isVegetarian) {
         return false;
       }
-      if (_onrecievedValues[Filter.vegan]! && !meal.isVegan) {
+      if (activefilter[Filter.vegan]! && !meal.isVegan) {
         return false;
       }
       return true;
@@ -58,23 +55,12 @@ class _TabScreenState extends ConsumerState<TabScreen> {
     void _onselectedscreen(String identiier) async {
       Navigator.of(context).pop();
       if (identiier == 'Filters') {
-        final result = await Navigator.of(context)
+       await Navigator.of(context)
             .push<Map<Filter, bool>>(//declaring the keytype and returntype
-                MaterialPageRoute(
-                    builder: (ctx) => FilterScreen(
-                          currentFilterModeValues: _onrecievedValues,
-                        )));
-        setState(() {
-          _onrecievedValues = result ?? kintialvalues;
-        });
-      } else {}
+                MaterialPageRoute(builder: (ctx) => const FilterScreen()));
+       
+      } 
     }
-
-    
-      
-    
-
-   
 
     // //or
     //   setState(() {
@@ -92,10 +78,7 @@ class _TabScreenState extends ConsumerState<TabScreen> {
     // }
 
     String currentpagetitle = 'Categories';
-    Widget currentscreen = Categories(
-      onfiltered: avilablemeals
-     
-    );
+    Widget currentscreen = Categories(onfiltered: avilablemeals);
 
     void changescreen(int index) {
       setState(() {
@@ -105,8 +88,7 @@ class _TabScreenState extends ConsumerState<TabScreen> {
 
     if (_currentpageindex == 1) {
       final myfaviroutemealprovider = ref.watch(faviroutesprovider);
-      currentscreen =
-          MealsScreen( meals: myfaviroutemealprovider);
+      currentscreen = MealsScreen(meals: myfaviroutemealprovider);
       currentpagetitle = 'Favourite';
     }
     return Scaffold(

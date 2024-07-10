@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals/provider/filters_provider.dart';
 
-enum Filter { glutenFree, lactoseFree, vegetarian, vegan }
+class FilterScreen extends ConsumerStatefulWidget {
+  const FilterScreen({super.key});
 
-class FilterScreen extends StatefulWidget {
-  const FilterScreen({super.key, required this.currentFilterModeValues});
-  final Map<Filter, bool> currentFilterModeValues;
   @override
-  State<FilterScreen> createState() {
+  ConsumerState<FilterScreen> createState() {
     return _FavouriteState();
   }
 }
 
-class _FavouriteState extends State<FilterScreen> {
+class _FavouriteState extends ConsumerState<FilterScreen> {
   var glutenswitchvalue = false;
   var lactoseswitchvalue = false;
   var vegetarianswitchvalue = false;
@@ -21,10 +21,12 @@ class _FavouriteState extends State<FilterScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    glutenswitchvalue = widget.currentFilterModeValues[Filter.glutenFree]!;
-    lactoseswitchvalue = widget.currentFilterModeValues[Filter.lactoseFree]!;
-    vegetarianswitchvalue = widget.currentFilterModeValues[Filter.vegetarian]!;
-    veganswitchvalue = widget.currentFilterModeValues[Filter.vegan]!;
+    final activefilter = ref.read(filtersProvider);
+    //it assigns the values to the filter bool values to this variable
+    glutenswitchvalue = activefilter[Filter.glutenFree]!;
+    lactoseswitchvalue = activefilter[Filter.lactoseFree]!;
+    vegetarianswitchvalue = activefilter[Filter.vegetarian]!;
+    veganswitchvalue = activefilter[Filter.vegan]!;
   }
 
   @override
@@ -50,14 +52,19 @@ class _FavouriteState extends State<FilterScreen> {
       // }),
       body: PopScope(
         canPop: false,
-        onPopInvoked: (ispop) {
+        onPopInvoked: (ispop) async {
           if (ispop) return;
-          Navigator.of(context).pop({
+          // now returning those values when the user pres  the back buttton
+
+          ref.read(filtersProvider.notifier).setFilters({
             Filter.glutenFree: glutenswitchvalue,
             Filter.lactoseFree: lactoseswitchvalue,
             Filter.vegetarian: vegetarianswitchvalue,
             Filter.vegan: veganswitchvalue
           });
+
+          Navigator.of(context).pop();
+          // return true;
         },
         child: Column(
           children: [
