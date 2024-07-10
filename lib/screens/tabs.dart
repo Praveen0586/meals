@@ -33,33 +33,34 @@ class _TabScreenState extends ConsumerState<TabScreen> {
 //sot the program wont be chnage - so we need to write this Declaration outisde
   @override
   Widget build(BuildContext context) {
-    final providedmeals = ref.watch(mealsProvider);
-    final activefilter = ref.watch(filtersProvider);
+  
     //now macking the filter logic
-    final avilablemeals = providedmeals.where((meal) {
-      if (activefilter[Filter.glutenFree]! && !meal.isGlutenFree) {
-       
-        return false;
-      }
-      if (activefilter[Filter.lactoseFree]! && !meal.isLactoseFree) {
-        return false;
-      }
-      if (activefilter[Filter.vegetarian]! && !meal.isVegetarian) {
-        return false;
-      }
-      if (activefilter[Filter.vegan]! && !meal.isVegan) {
-        return false;
-      }
-      return true;
-    }).toList();
+
+    //with the help of the provider
+    final filteredList = ref.watch(filteredMealsProvider);
+    final avilablemeals = filteredList;
+    // providedmeals.where((meal) {
+    //   if (activefilter[Filter.glutenFree]! && !meal.isGlutenFree) {
+    //     return false;
+    //   }
+    //   if (activefilter[Filter.lactoseFree]! && !meal.isLactoseFree) {
+    //     return false;
+    //   }
+    //   if (activefilter[Filter.vegetarian]! && !meal.isVegetarian) {
+    //     return false;
+    //   }
+    //   if (activefilter[Filter.vegan]! && !meal.isVegan) {
+    //     return false;
+    //   }
+    //   return true;
+    // }).toList();
     void _onselectedscreen(String identiier) async {
       Navigator.of(context).pop();
       if (identiier == 'Filters') {
-       await Navigator.of(context)
+        await Navigator.of(context)
             .push<Map<Filter, bool>>(//declaring the keytype and returntype
                 MaterialPageRoute(builder: (ctx) => const FilterScreen()));
-       
-      } 
+      }
     }
 
     // //or
