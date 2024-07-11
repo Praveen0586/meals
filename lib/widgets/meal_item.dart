@@ -19,23 +19,28 @@ class Mealitem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    bool iswindows = width < 420;
+
     return Card(
-      margin: const EdgeInsets.all(9),
+      margin:
+          EdgeInsets.symmetric(horizontal: iswindows ? 9 : 150, vertical: 9),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       elevation: 25,
       clipBehavior: Clip.hardEdge,
       child: InkWell(
         onTap: () {
-          onselected(context,meal);
+          onselected(context, meal);
         },
         // borderRadius: BorderRadius.circular(25),
         child: Stack(
           children: [
-            Hero(tag: meal.id,
+            Hero(
+              tag: meal.id,
               child: FadeInImage(
                 placeholder: MemoryImage(kTransparentImage),
                 image: NetworkImage(meal.imageUrl),
-                height: 200,
+                height: iswindows ? 200 : 250,
                 fit: BoxFit.cover,
                 width: double.infinity,
               ),

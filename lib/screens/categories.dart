@@ -52,12 +52,14 @@ class _CategoriesState extends State<Categories>
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    bool iswindows = width < 420;
     return AnimatedBuilder(
       animation: _animationCOntriller,
       child: GridView(
         padding: const EdgeInsets.all(12),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: iswindows ? 2 : 4,
             childAspectRatio: 1.5,
             crossAxisSpacing: 20,
             mainAxisSpacing: 20),

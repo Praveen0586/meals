@@ -24,7 +24,7 @@ class MealsScreen extends StatelessWidget {
       ),
       itemCount: meals.length,
     );
-
+    print(MediaQuery.of(context).size.width);
     if (meals.isEmpty) {
       content = Center(
         child: Column(
