@@ -71,7 +71,7 @@ class _CategoriesState extends State<Categories>
       ),
       builder: (context, child) => SlideTransition(
         position: Tween(
-          begin: const Offset(-0.9, .9),
+          begin: const Offset(-0.9, 0),
           end: const Offset(0, 0),
         ).animate(CurvedAnimation(
             parent: _animationCOntriller,
