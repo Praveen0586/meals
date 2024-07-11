@@ -14,9 +14,9 @@ class MealdetailsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     
-    final favirotemeals = ref.watch(filteredMealsProvider);
-    final isFaviroute = favirotemeals.contains(meal);
-   
+     final favoriteMeals = ref.watch(faviroutesprovider);
+
+    final isFavorite = favoriteMeals.contains(meal);
 
     return Scaffold(
         appBar: AppBar(
@@ -38,7 +38,7 @@ class MealdetailsScreen extends ConsumerWidget {
                  
                 },
                 icon:
-                    Icon(isFaviroute ? Icons.star : Icons.star_border))
+                    Icon(isFavorite ? Icons.star : Icons.star_border))
           ],
         ),
         body: ListView(children: [
