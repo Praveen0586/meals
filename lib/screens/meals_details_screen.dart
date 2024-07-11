@@ -37,7 +37,7 @@ class MealdetailsScreen extends ConsumerWidget {
               icon: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
                 transitionBuilder: (child, animation) => RotationTransition(
-                  turns: animation,
+                  turns: Tween<double>(begin: 0.5, end: 1).animate(animation),
                   child: child,
                 ),
                 child: Icon(
