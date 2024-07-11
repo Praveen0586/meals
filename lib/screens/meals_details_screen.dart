@@ -22,20 +22,31 @@ class MealdetailsScreen extends ConsumerWidget {
           title: Text(meal.title),
           actions: [
             IconButton(
-                onPressed: () {
-                  // we triger the fuction with provider
+              onPressed: () {
+                // we triger the fuction with provider
 
-                  final isAdded = ref
-                      .read(faviroutesprovider.notifier)
-                      .toggleforfaviroute(meal);
+                final isAdded = ref
+                    .read(faviroutesprovider.notifier)
+                    .toggleforfaviroute(meal);
 
-                  ScaffoldMessenger.of(context).clearSnackBars();
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(isAdded
-                          ? 'Marked as a favorite.'
-                          : "This meal is no longer my favorite")));
-                },
-                icon: Icon(isFavorite ? Icons.star : Icons.star_border))
+                ScaffoldMessenger.of(context).clearSnackBars();
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(isAdded
+                        ? 'Marked as a favorite.'
+                        : "This meal is no longer my favorite")));
+              },
+              icon: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                transitionBuilder: (child, animation) => RotationTransition(
+                  turns: animation,
+                  child: child,
+                ),
+                child: Icon(
+                  isFavorite ? Icons.star : Icons.star_border,
+                  key: ValueKey(isFavorite),
+                ),
+              ),
+            )
           ],
         ),
         body: ListView(children: [
