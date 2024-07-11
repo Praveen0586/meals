@@ -24,7 +24,7 @@ class _CategoriesState extends State<Categories>
     super.initState();
     _animationCOntriller = AnimationController(
         vsync: this,
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 900),
         lowerBound: 0,
         upperBound: 1);
     _animationCOntriller.forward(); //menas to start an animation
@@ -71,9 +71,11 @@ class _CategoriesState extends State<Categories>
       ),
       builder: (context, child) => SlideTransition(
         position: Tween(
-          begin: const Offset(0, 0.3),
+          begin: const Offset(-0.9, .9),
           end: const Offset(0, 0),
-        ).animate(_animationCOntriller),
+        ).animate(CurvedAnimation(
+            parent: _animationCOntriller,
+            curve: Curves.fastEaseInToSlowEaseOut)),
         child: child,
       ),
     );
