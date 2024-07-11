@@ -51,7 +51,8 @@ class MealdetailsScreen extends ConsumerWidget {
         body: ListView(children: [
           Column(
             children: [
-              Hero(tag: meal.id,
+              Hero(
+                tag: meal.id,
                 child: Image.network(
                   meal.imageUrl,
                   width: double.infinity,
