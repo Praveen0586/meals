@@ -70,12 +70,10 @@ class _CategoriesState extends State<Categories>
         ],
       ),
       builder: (context, child) => SlideTransition(
-        position: _animationCOntriller.drive(
-          Tween(
-            begin: const Offset(0, 0.3),
-            end: const Offset(0, 0),
-          ),
-        ),
+        position: Tween(
+          begin: const Offset(0, 0.3),
+          end: const Offset(0, 0),
+        ).animate(_animationCOntriller),
         child: child,
       ),
     );
