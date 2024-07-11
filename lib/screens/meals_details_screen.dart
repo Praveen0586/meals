@@ -13,8 +13,7 @@ class MealdetailsScreen extends ConsumerWidget {
   final Meal meal;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    
-     final favoriteMeals = ref.watch(faviroutesprovider);
+    final favoriteMeals = ref.watch(faviroutesprovider);
 
     final isFavorite = favoriteMeals.contains(meal);
 
@@ -35,10 +34,8 @@ class MealdetailsScreen extends ConsumerWidget {
                       content: Text(isAdded
                           ? 'Marked as a favorite.'
                           : "This meal is no longer my favorite")));
-                 
                 },
-                icon:
-                    Icon(isFavorite ? Icons.star : Icons.star_border))
+                icon: Icon(isFavorite ? Icons.star : Icons.star_border))
           ],
         ),
         body: ListView(children: [
