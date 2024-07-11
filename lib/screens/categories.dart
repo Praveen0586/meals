@@ -27,7 +27,7 @@ class _CategoriesState extends State<Categories>
         duration: const Duration(milliseconds: 300),
         lowerBound: 0,
         upperBound: 1);
-    _animationCOntriller.forward();
+    _animationCOntriller.forward(); //menas to start an animation
   }
 
   @override
@@ -53,24 +53,31 @@ class _CategoriesState extends State<Categories>
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-        animation: _animationCOntriller,
-        child: GridView(
-          padding: const EdgeInsets.all(12),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 1.5,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20),
-          children: [
-            //alternate for assumenddatas.map(category) =>categoryitemgrid(category: category)
-            for (final category in availableCategories)
-              CategoryItemGrid(() {
-                _selectedcategoroy(context, category);
-              }, category: category),
-          ],
+      animation: _animationCOntriller,
+      child: GridView(
+        padding: const EdgeInsets.all(12),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 1.5,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20),
+        children: [
+          //alternate for assumenddatas.map(category) =>categoryitemgrid(category: category)
+          for (final category in availableCategories)
+            CategoryItemGrid(() {
+              _selectedcategoroy(context, category);
+            }, category: category),
+        ],
+      ),
+      builder: (context, child) => SlideTransition(
+        position: _animationCOntriller.drive(
+          Tween(
+            begin: const Offset(0, 0.3),
+            end: const Offset(0, 0),
+          ),
         ),
-        builder: (context, child) => Padding(
-            padding:
-                EdgeInsets.only(top: 100 - _animationCOntriller.value * 100),child: child,));
+        child: child,
+      ),
+    );
   }
 }
