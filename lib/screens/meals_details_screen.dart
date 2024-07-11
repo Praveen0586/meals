@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:meals/models/mealsdummy.dart';
 import 'package:meals/provider/faviroutes_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meals/provider/filters_provider.dart';
 
 class MealdetailsScreen extends ConsumerWidget {
   const MealdetailsScreen({
