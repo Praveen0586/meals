@@ -36,10 +36,8 @@ class MealdetailsScreen extends ConsumerWidget {
               },
               icon: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
-                transitionBuilder: (child, animation) => SlideTransition(
-                  position: Tween(
-                          begin: const Offset(0, 0.2), end: const Offset(0, 0))
-                      .animate(animation),
+                transitionBuilder: (child, animation) => ScaleTransition(
+                  scale: animation,
                   child: child,
                 ),
                 child: Icon(
